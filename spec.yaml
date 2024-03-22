@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  title: Book Info Service
+  description: API for managing book information
+  version: 1.0.0
+
+paths:
+  /books:
+    get:
+      summary: List books by genre
+      parameters:
+        - name: genre
+          in: query
+          description: Genre to filter books by
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+        
+    post:
+      summary: Add a new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBook'
+      responses:
+        '201':
+          description: Book created successfully
+        '400':
+          description: Invalid request body
+          
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+        genre:
+          type: string
+      required:
+        - title
+        - author
+        - genre
+        
+    NewBook:
+      type: object
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+        genre:
+          type: string
+      required:
+        - title
+        - author
+        - genre
